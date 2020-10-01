@@ -1,0 +1,14 @@
+<mat-toolbar color='primary'>
+    <span>Controle Financeiro</span>
+    <span class="spacer"></span>
+
+    <div *ngIf="emailUsuarioLogado" fxLayout="row" fxLayoutGap="30px" fxLayoutAlign="end center">
+        <div>
+            Olá, {{emailUsuarioLogado}}
+        </div>
+
+        <div>
+            <button type="button" mat-raised-button (click)="EfetuarLogout()">Logout</button>
+        </div>
+    </div>
+</mat-toolbar>

@@ -1,0 +1,50 @@
+.dadosCategorias {
+  padding: 30px 30px 30px 30px;
+}
+
+.tabela {
+  width: 100%;
+  padding-top: 30px;
+}
+
+.divCard {
+  padding: 50px;
+  width: 600px;
+}
+
+.mat-form-field.mat-form-field {
+  width: 500px;
+}
+
+.cabecalho {
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.titulo {
+  position: absolute;
+  left: 5px;
+}
+
+.divAutoComplete {
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.autoCompleteInput {
+  width: 500px;
+}
+
+.textoErros {
+  font-weight: 900;
+  color: #c0392b;
+}
+
+.divErros {
+  padding: 20px;
+}
+
+.cardErros {
+  padding-top: 30px;
+  padding-bottom: 30px;
+}

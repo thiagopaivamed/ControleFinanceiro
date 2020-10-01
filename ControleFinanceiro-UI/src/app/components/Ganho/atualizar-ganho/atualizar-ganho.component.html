@@ -1,0 +1,125 @@
+<div *ngIf="!formulario">
+    <mat-progress-bar mode="buffer"></mat-progress-bar>
+</div>
+
+<div class="divCard" *ngIf="formulario">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>
+                <h3>Atualização do ganho de valor R$ {{valorGanho}}</h3>
+            </mat-card-title>
+        </mat-card-header>
+
+        <form [formGroup]="formulario" (ngSubmit)="EnviarFormulario()">
+            <div class="cardErros" *ngIf="erros.length > 0">
+                <mat-card>
+                    <mat-card-header>
+                        <mat-card-title>
+                            Algo deu errado :(
+                        </mat-card-title>
+                    </mat-card-header>
+
+                    <mat-divider></mat-divider>
+
+                    <mat-card-content>
+                        <div class="divErros">
+                            <h4 *ngFor="let erro of erros" class="textoErros">
+                                {{ erro }}
+                            </h4>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+
+            <mat-content>
+                <div>
+                    <mat-form-field>
+                        <mat-label>Descrição</mat-label>
+                        <input type="text" formControlName="descricao" matInput placeholder="Digite a descrição do ganho" required minlength="1" maxlength="50"/>
+                        <mat-error *ngIf="propriedade.descricao.touched && propriedade.descricao.invalid">
+                            <sup>*</sup> Digite a descrição do ganho
+                        </mat-error>
+                        <mat-error *ngIf="propriedade.descricao.errors?.minlength">
+                            <sup>*</sup> Use mais caracteres
+                        </mat-error>
+                        <mat-error *ngIf="propriedade.descricao.errors?.maxlength">
+                            <sup>*</sup> Use menos caracteres
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div>
+                    <mat-form-field>
+                        <mat-label>Selecione a categoria</mat-label>
+                        <mat-select formControlName="categoriaId" required >
+                            <mat-option *ngFor="let categoria of categorias" [value]="categoria.categoriaId">
+                                {{categoria.nome}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="propriedade.categoriaId.touched && propriedade.categoriaId.invalid">
+                            <sup>*</sup> Selecione a categoria
+                        </mat-error>                        
+                    </mat-form-field>
+                </div>
+
+                <div>
+                    <mat-form-field>
+                        <mat-label>Valor</mat-label>
+                        <input type="text" formControlName="valor" matInput placeholder="Digite o valor do ganho"/>
+                        <mat-error *ngIf="propriedade.valor.touched && propriedade.valor.invalid">
+                            <sup>*</sup> Digite o valor do ganho
+                        </mat-error>                       
+                    </mat-form-field>
+                </div>
+
+                <div>
+                    <mat-form-field>
+                        <mat-label>Dia</mat-label>
+                        <input type="text" formControlName="dia" matInput placeholder="Digite o dia do ganho"/>
+                        <mat-error *ngIf="propriedade.dia.touched && propriedade.dia.invalid">
+                            <sup>*</sup> Digite o dia do ganho
+                        </mat-error>                       
+                    </mat-form-field>
+                </div>
+
+                <div>
+                    <mat-form-field>
+                        <mat-label>Selecione o mês</mat-label>
+                        <mat-select formControlName="mesId" required >
+                            <mat-option *ngFor="let mes of meses" [value]="mes.mesId">
+                                {{mes.nome}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="propriedade.mesId.touched && propriedade.mesId.invalid">
+                            <sup>*</sup> Selecione o mês
+                        </mat-error>                        
+                    </mat-form-field>
+                </div>
+
+                <div>
+                    <mat-form-field>
+                        <mat-label>Ano</mat-label>
+                        <input type="text" formControlName="ano" matInput placeholder="Digite o ano do ganho"/>
+                        <mat-error *ngIf="propriedade.ano.touched && propriedade.ano.invalid">
+                            <sup>*</sup> Digite o ano do ganho
+                        </mat-error>                       
+                    </mat-form-field>
+                </div>
+            </mat-content>
+
+            <mat-divider></mat-divider>
+
+            <mat-card-actions>
+                <div>
+                    <button type="submit" mat-stroked-button color="primary" [disabled]="formulario.invalid">
+                        Atualizar
+                    </button>
+
+                    <button type="button" mat-stroked-button (click)="VoltarListagem()">
+                        Voltar
+                    </button>
+                </div>
+            </mat-card-actions>
+        </form>
+    </mat-card>
+</div>

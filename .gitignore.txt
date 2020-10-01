@@ -1,0 +1,8 @@
+ControleFinanceiro.API/ControleFinanceiro.API/bin/
+ControleFinanceiro.API/ControleFinanceiro.API/obj/
+ControleFinanceiro.API/ControleFinanceiro.BLL/bin/
+ControleFinanceiro.API/ControleFinanceiro.BLL/obj/
+ControleFinanceiro.DAL/ControleFinanceiro.DAL/bin/
+ControleFinanceiro.DAL/ControleFinanceiro.DAL/Migrations/
+ControleFinanceiro.DAL/ControleFinanceiro.DAL/obj/
+ControleFinanceiro-UI/node_modules

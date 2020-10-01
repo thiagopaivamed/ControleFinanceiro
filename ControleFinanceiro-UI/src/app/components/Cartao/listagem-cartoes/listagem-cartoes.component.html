@@ -1,0 +1,93 @@
+<div *ngIf="!cartoes">
+  <mat-progress-bar mode="buffer"></mat-progress-bar>
+</div>
+
+<div class="dadosCartoes">
+  <div class="cabeçalho">
+    <mat-grid-list cols="2" rowHeight="50px">
+      <mat-grid-tile>
+        <h2 class="titulo">Cartões cadastrados</h2>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <button
+          mat-stroked-button
+          color="primary"
+          routerLink="/cartoes/novocartao"
+        >
+          Novo cartão
+        </button>
+      </mat-grid-tile>
+    </mat-grid-list>
+
+    <mat-divider></mat-divider>
+
+    <div class="divAutoComplete">
+      <form>
+        <mat-form-field class="autoCompleteInput">
+          <input type="text" matInput placeholder="Digite o que procura" [formControl]="autoCompleteInput" [matAutocomplete]="auto"/>
+          <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+            <mat-option *ngFor="let numero of numeroCartoes | async" [value]="numero">
+              {{numero}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </form>
+    </div>
+
+    <table  *ngIf="cartoes"
+      mat-table
+      [dataSource]="cartoes"
+      matSort
+      class="mat-elevation-z8 tabela"
+    >
+      <ng-container matColumnDef="nome">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Nome</th>
+        <td mat-cell *matCellDef="let cartao">{{ cartao.nome }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="bandeira">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Bandeira</th>
+        <td mat-cell *matCellDef="let cartao">{{ cartao.bandeira }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="numero">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Número</th>
+        <td mat-cell *matCellDef="let cartao">{{ cartao.numero }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="limite">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Limite</th>
+        <td mat-cell *matCellDef="let cartao">{{ cartao.limite }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="acoes">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Ações</th>
+        <td mat-cell *matCellDef="let cartao">
+          <button
+            mat-mini-fab
+            color="primary"
+            [routerLink]="['/cartoes/atualizarcartao', cartao.cartaoId]"
+          >
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button
+            mat-mini-fab
+            color="warn"
+            (click)="AbrirDialog(cartao.cartaoId, cartao.numero)"
+          >
+            <mat-icon>delete_forever</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+
+    <mat-paginator
+      [pageSizeOptions]="[5, 10, 15, 20]"
+      showFirstLastButtons
+    ></mat-paginator>
+  </div>
+</div>

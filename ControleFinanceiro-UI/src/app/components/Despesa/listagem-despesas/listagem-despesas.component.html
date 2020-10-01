@@ -1,0 +1,101 @@
+<div *ngIf="!despesas">
+  <mat-progress-bar mode="buffer"></mat-progress-bar>
+</div>
+
+<div class="dadosDespesa">
+  <div class="cabecalho">
+    <mat-grid-list cols="2" rowHeight="50px">
+      <mat-grid-tile>
+        <h2 class="titulo">Despesas cadastradas</h2>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <button
+          mat-stroked-button
+          color="primary"
+          routerLink="/despesas/novadespesa"
+        >
+          Nova despesa
+        </button>
+      </mat-grid-tile>
+    </mat-grid-list>
+
+    <mat-divider></mat-divider>
+
+    <div class="divAutoComplete">
+      <form>
+        <mat-form-field class="autoCompleteInput">
+          <input type="text" placeholder="Digite o que você procura" matInput [formControl]="autoCompleteInput" [matAutocomplete]="auto"/>
+          <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" >
+            <mat-option *ngFor="let nome of nomesCategorias | async" [value]="nome">
+              {{nome}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </form>
+    </div>
+
+    <table
+      mat-table
+      matSort
+      [dataSource]="despesas"
+      class="mat-elevation-z8 tabela"
+      *ngIf="despesas"
+    >
+      <ng-container matColumnDef="numero">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          Número do cartão
+        </th>
+        <td mat-cell *matCellDef="let despesa">{{ despesa.cartao.numero }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="descricao">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Descrição</th>
+        <td mat-cell *matCellDef="let despesa">{{ despesa.descricao }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="categoria">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Categoria</th>
+        <td mat-cell *matCellDef="let despesa">
+          <mat-icon>{{ despesa.categoria.icone }}</mat-icon>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="valor">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Valor</th>
+        <td mat-cell *matCellDef="let despesa">{{ despesa.valor }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="data">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Data</th>
+        <td mat-cell *matCellDef="let despesa">
+          {{ despesa.dia }} de {{ despesa.mes.nome }} de {{ despesa.ano }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="acoes">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Ações</th>
+        <td mat-cell *matCellDef="let despesa">
+          <button
+            mat-mini-fab
+            color="primary"
+            [routerLink]="['/despesas/atualizardespesa', despesa.despesaId]"
+          >
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-mini-fab color="warn" (click)="AbrirDialog(despesa.despesaId, despesa.valor)">
+            <mat-icon>delete_forever</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+
+    <mat-paginator
+      [pageSizeOptions]="[5, 10, 15, 20]"
+      showFirstLastButtons
+    ></mat-paginator>
+  </div>
+</div>

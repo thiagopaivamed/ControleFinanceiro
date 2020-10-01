@@ -1,0 +1,14 @@
+<h1 mat-dialog-title>Confirmação de Exclusão</h1>
+<div mat-content-dialog>
+  Prosseguir com a exclusão do cartão {{data.numero}} ?
+</div>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Não</button>
+  <button
+    mat-button
+    [mat-dialog-close]="true"
+    (click)="ExcluirCartao(data.cartaoId)"
+  >
+    Sim
+  </button>
+</mat-dialog-actions>

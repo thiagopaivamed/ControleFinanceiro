@@ -1,0 +1,205 @@
+<div *ngIf="!formulario">
+  <mat-progress-bar mode="buffer"></mat-progress-bar>
+</div>
+
+<div class="divCard" *ngIf="formulario">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title><h3>Atualização do cartão</h3></mat-card-title>
+    </mat-card-header>
+
+    <form
+      [formGroup]="formulario"      
+      (ngSubmit)="EnviarFormulario()"
+    >
+      <div class="cardErros" *ngIf="erros.length > 0">
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>Algo deu errado :(</mat-card-title>
+          </mat-card-header>
+
+          <mat-divider></mat-divider>
+
+          <mat-card-content>
+            <div class="divErros">
+              <h4 *ngFor="let erro of erros" class="textoErros">
+                {{ erro }}
+              </h4>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+
+      <mat-card-content>
+        <div>
+          <mat-form-field>
+            <mat-label>Nome</mat-label>
+            <input
+              type="text"
+              formControlName="nome"
+              matInput
+              placeholder="Digite o nome do cartão"
+              required
+              minlength="1"
+              maxlength="20"
+            />
+            <mat-error
+              *ngIf="propriedade.nome.touched && propriedade.nome.invalid"
+            >
+              <sup>*</sup> Digite o nome do cartão
+            </mat-error>
+
+            <mat-error
+              *ngIf="
+                propriedade.nome.errors?.minlength && propriedade.nome.invalid
+              "
+            >
+              <sup>*</sup> Use mais caracteres
+            </mat-error>
+
+            <mat-error
+              *ngIf="
+                propriedade.nome.errors?.maxlength && propriedade.nome.invalid
+              "
+            >
+              <sup>*</sup> Use menos caracteres
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div>
+          <mat-form-field>
+            <mat-label>Bandeira</mat-label>
+            <input
+              type="text"
+              formControlName="bandeira"
+              matInput
+              placeholder="Digite a bandeira do cartão"
+              required
+              minlength="1"
+              maxlength="15"
+            />
+            <mat-error
+              *ngIf="
+                propriedade.bandeira.touched && propriedade.bandeira.invalid
+              "
+            >
+              <sup>*</sup> Digite a bandeira do cartão
+            </mat-error>
+
+            <mat-error
+              *ngIf="
+                propriedade.bandeira.errors?.minlength &&
+                propriedade.bandeira.invalid
+              "
+            >
+              <sup>*</sup> Use mais caracteres
+            </mat-error>
+
+            <mat-error
+              *ngIf="
+                propriedade.bandeira.errors?.maxlength &&
+                propriedade.bandeira.invalid
+              "
+            >
+              <sup>*</sup> Use menos caracteres
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div>
+          <mat-form-field>
+            <mat-label>Número do cartão</mat-label>
+            <input
+              type="text"
+              formControlName="numero"
+              matInput
+              placeholder="Digite o número do cartão"
+              required
+              minlength="1"
+              maxlength="20"
+              mask="0000 0000 0000 0000"
+            />
+            <mat-error
+              *ngIf="propriedade.numero.touched && propriedade.numero.invalid"
+            >
+              <sup>*</sup> Digite o número do cartão
+            </mat-error>
+
+            <mat-error
+              *ngIf="
+                propriedade.numero.errors?.minlength &&
+                propriedade.numero.invalid
+              "
+            >
+              <sup>*</sup> Use mais caracteres
+            </mat-error>
+
+            <mat-error
+              *ngIf="
+                propriedade.numero.errors?.maxlength &&
+                propriedade.numero.invalid
+              "
+            >
+              <sup>*</sup> Use menos caracteres
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div>
+          <mat-form-field>
+            <mat-label>Limite do cartão</mat-label>
+            <input
+              type="text"
+              formControlName="limite"
+              matInput
+              placeholder="Digite o limite do cartão"
+              required
+            />
+            <mat-error
+              *ngIf="propriedade.limite.touched && propriedade.limite.invalid"
+            >
+              <sup>*</sup> Digite o limite do cartão
+            </mat-error>
+
+            <mat-error
+              *ngIf="
+                propriedade.limite.errors?.minlength &&
+                propriedade.limite.invalid
+              "
+            >
+              <sup>*</sup> Use mais caracteres
+            </mat-error>
+
+            <mat-error
+              *ngIf="
+                propriedade.limite.errors?.maxlength &&
+                propriedade.limite.invalid
+              "
+            >
+              <sup>*</sup> Use menos caracteres
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </mat-card-content>
+
+      <mat-divider></mat-divider>
+
+      <mat-card-actions>
+        <div>
+          <button
+            type="submit"
+            mat-stroked-button
+            color="primary"
+            [disabled]="formulario.invalid"
+          >
+            Atualizar
+          </button>
+          <button type="button" mat-stroked-button (click)="VoltarListagem()">
+            Voltar
+          </button>
+        </div>
+      </mat-card-actions>
+    </form>
+  </mat-card>
+</div>

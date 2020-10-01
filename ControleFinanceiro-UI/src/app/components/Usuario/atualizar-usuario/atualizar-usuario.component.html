@@ -1,0 +1,202 @@
+<div *ngIf="!formulario">
+  <mat-progress-bar mode="buffer"></mat-progress-bar>
+</div>
+
+<div
+  class="divFormulario"
+  fxLayout="row"
+  fxLayoutAlign="center end"
+  *ngIf="formulario"
+>
+  <div class="divForm">
+    <h1>Atualização do usuário {{ emailUsuario }}</h1>
+
+    <mat-divider></mat-divider>
+
+    <div class="formulario">
+      <form [formGroup]="formulario" (ngSubmit)="EnviarFormulario()">
+        <div fxLayout="row" fxLayoutGap="30px">
+          <div fxFlex="40" fxLayoutAlign="center end">
+            <div fxLayout="column">
+              <div class="divFoto">
+                <img
+                  id="foto"
+                  *ngIf="urlFoto"
+                  [src]="urlFoto"
+                  width="350"
+                  height="300"
+                />
+              </div>
+
+              <div fxLayoutAlign="center end">
+                <input
+                  hidden
+                  type="file"
+                  #fileInput
+                  name="foto"
+                  formControlName="foto"
+                  (change)="SelecionarFoto($event)"
+                />
+                <br /><br /><br /><br />
+                <button
+                  type="button"
+                  mat-stroked-button
+                  color="primary"
+                  (click)="fileInput.click()"
+                >
+                  Escolha sua foto
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div fxFlex="60">
+            <div class="cardErros" *ngIf="erros.length > 0">
+              <mat-card>
+                <mat-card-header>
+                  <mat-card-title> Algo deu errado :( </mat-card-title>
+                </mat-card-header>
+                <mat-divider></mat-divider>
+                <mat-card-content>
+                  <div class="divErros">
+                    <h4 *ngFor="let erro of erros" class="textoErros">
+                      {{ erro }}
+                    </h4>
+                  </div>
+                </mat-card-content>
+              </mat-card>
+            </div>
+
+            <div>
+              <mat-form-field>
+                <mat-label>Nome de usuário</mat-label>
+                <input
+                  type="text"
+                  formControlName="username"
+                  matInput
+                  placeholder="Digite o nome de usuário"
+                  required
+                  minlength="6"
+                  maxlength="50"
+                />
+                <mat-error
+                  *ngIf="
+                    propriedade.username.touched && propriedade.username.invalid
+                  "
+                >
+                  <sup>*</sup> Digite o nome de usuário
+                </mat-error>
+                <mat-error *ngIf="propriedade.username.errors?.minlength">
+                  <sup>*</sup> Use mais caracteres
+                </mat-error>
+                <mat-error *ngIf="propriedade.username.errors?.maxlength">
+                  <sup>*</sup> Use menos caracteres
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <div>
+              <mat-form-field>
+                <mat-label>CPF</mat-label>
+                <input
+                  type="text"
+                  formControlName="cpf"
+                  matInput
+                  placeholder="Digite o cpf"
+                  required
+                  mask="000.000.000-00"
+                />
+                <mat-error
+                  *ngIf="propriedade.cpf.touched && propriedade.cpf.invalid"
+                >
+                  <sup>*</sup> Digite o cpf
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <div>
+              <mat-form-field>
+                <mat-label>Profissão</mat-label>
+                <input
+                  type="text"
+                  formControlName="profissao"
+                  matInput
+                  placeholder="Digite a profissão"
+                  required
+                  minlength="1"
+                  maxlength="30"
+                />
+                <mat-error
+                  *ngIf="
+                    propriedade.profissao.touched &&
+                    propriedade.profissao.invalid
+                  "
+                >
+                  <sup>*</sup> Digite a profissão
+                </mat-error>
+                <mat-error *ngIf="propriedade.profissao.errors?.minlength">
+                  <sup>*</sup> Use mais caracteres
+                </mat-error>
+                <mat-error *ngIf="propriedade.profissao.errors?.maxlength">
+                  <sup>*</sup> Use menos caracteres
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <div>
+              <mat-form-field>
+                <mat-label>Email</mat-label>
+                <input
+                  type="email"
+                  formControlName="email"
+                  matInput
+                  placeholder="Digite o email"
+                  required
+                  minlength="10"
+                  maxlength="50"
+                />
+                <mat-error
+                  *ngIf="propriedade.email.touched && propriedade.email.invalid"
+                >
+                  <sup>*</sup> Digite o email
+                </mat-error>
+                <mat-error *ngIf="propriedade.email.errors?.minlength">
+                  <sup>*</sup> Use mais caracteres
+                </mat-error>
+                <mat-error *ngIf="propriedade.email.errors?.maxlength">
+                  <sup>*</sup> Use menos caracteres
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <div
+          fxLayout="row"
+          fxLayoutGap="10px"
+          fxLayoutAlign="end center"
+          class="botoes"
+        >
+          <div>
+            <button
+              type="submit"
+              mat-stroked-button
+              color="primary"
+              [disabled]="formulario.invalid"
+            >
+              Atualizar
+            </button>
+          </div>
+
+          <div>
+            <button type="button" mat-stroked-button (click)="Voltar()">
+              Voltar
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

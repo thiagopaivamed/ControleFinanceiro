@@ -1,0 +1,89 @@
+<div class="divDashboard">
+  <div fxLayout="row" fxLayoutAlign="space-around center">
+    <div>
+      <mat-card>
+        <div
+          fxLayout="row"
+          fxLayoutAlign="space-around center"
+          fxLayoutGap="20px"
+        >
+          <div fxFlex="40">
+            <mat-icon style="font-size: 50px">credit_card</mat-icon>
+          </div>
+          <div fxFlex="60">{{ qtdCartoes }} cartões cadastrados</div>
+        </div>
+      </mat-card>
+    </div>
+
+    <div>
+      <mat-card>
+        <div
+          fxLayout="row"
+          fxLayoutAlign="space-around center"
+          fxLayoutGap="20px"
+        >
+          <div fxFlex="40">
+            <mat-icon style="font-size: 50px">trending_up</mat-icon>
+          </div>
+          <div fxFlex="60">Ganhos de R$ {{ ganhoTotal }}</div>
+        </div>
+      </mat-card>
+    </div>
+
+    <div>
+      <mat-card>
+        <div
+          fxLayout="row"
+          fxLayoutAlign="space-around center"
+          fxLayoutGap="20px"
+        >
+          <div fxFlex="40">
+            <mat-icon style="font-size: 50px">trending_down</mat-icon>
+          </div>
+          <div fxFlex="60">Despesas de R$ {{ despesaTotal }}</div>
+        </div>
+      </mat-card>
+    </div>
+
+    <div>
+      <mat-card>
+        <div
+          fxLayout="row"
+          fxLayoutAlign="space-around center"
+          fxLayoutGap="20px"
+        >
+          <div fxFlex="40">
+            <mat-icon style="font-size: 50px">account_balance</mat-icon>
+          </div>
+          <div fxFlex="60">Saldo de R$ {{ saldo }}</div>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="anos" class="anos" fxLayout="row" fxLayoutAlign="end center">
+  <mat-form-field appearance="outline">
+    <mat-label>Selecione o ano</mat-label>
+    <mat-select
+      #anoSelecionado
+      [(ngModel)]="anoAtual"
+      (selectionChange)="CarregarDados(anoSelecionado.value)"
+    >
+      <mat-option *ngFor="let ano of anos" [value]="ano">
+        {{ ano }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+
+<div class="divGrafico" *ngIf="dados" height="400" width="450">
+  <canvas
+    baseChart
+    [datasets]="dados"
+    [labels]="labels"
+    [options]="opcoes"
+    [plugins]="plugins"
+    [chartType]="tipo"
+  ></canvas>
+</div>

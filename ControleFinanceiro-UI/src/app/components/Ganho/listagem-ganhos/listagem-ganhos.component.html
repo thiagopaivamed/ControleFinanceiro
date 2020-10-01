@@ -1,0 +1,74 @@
+<div *ngIf="!ganhos">
+    <mat-progress-bar mode="buffer"></mat-progress-bar>
+</div>
+
+<div class="dadosGanhos">
+    <div class="cabecalho">
+        <mat-grid-list cols="2" rowHeight="50px">
+            <mat-grid-tile>
+                <h2 class="titulo">Ganhos cadastrados</h2>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+                <button mat-stroked-button color="primary" routerLink="/ganhos/novoganho">
+                    Novo ganho
+                </button>
+            </mat-grid-tile>
+        </mat-grid-list>
+
+        <mat-divider></mat-divider>
+
+        <div class="divAutoComplete">
+            <form>
+                <mat-form-field class="autoCompleteInput">
+                    <input type="text" placeholder="Digite o que procura" matInput [formControl]="autoCompleteInput" [matAutocomplete]="auto"/>
+                    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                        <mat-option *ngFor="let categoria of nomesCategorias | async" [value]="categoria">
+                            {{categoria}}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </form>
+        </div>
+
+        <table mat-table [dataSource]="ganhos" matSort class="mat-elevation-z8 tabela" *ngIf="ganhos">
+            <ng-container matColumnDef="descricao">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Descrição</th>
+                <td mat-cell *matCellDef="let ganho">{{ganho.descricao}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="categoria">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Categoria</th>
+                <td mat-cell *matCellDef="let ganho"><mat-icon>{{ganho.categoria.icone}}</mat-icon></td>
+            </ng-container>
+
+            <ng-container matColumnDef="valor">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Valor</th>
+                <td mat-cell *matCellDef="let ganho">{{ganho.valor}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="data">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Data</th>
+                <td mat-cell *matCellDef="let ganho">{{ganho.dia}} de {{ganho.mes.nome}} de {{ganho.ano}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="acoes">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Ações</th>
+                <td mat-cell *matCellDef="let ganho">
+                    <button mat-mini-fab color="primary" [routerLink]="['/ganhos/atualizarganho', ganho.ganhoId]">
+                    <mat-icon>edit</mat-icon>
+                    </button>
+
+                    <button mat-mini-fab color="warn" (click)="AbrirDialog(ganho.ganhoId, ganho.valor)">
+                        <mat-icon>delete_forever</mat-icon>
+                        </button>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+
+        <mat-paginator [pageSizeOptions]="[5, 10, 15, 20]" showFirstLastButtons></mat-paginator>
+    </div>
+</div>

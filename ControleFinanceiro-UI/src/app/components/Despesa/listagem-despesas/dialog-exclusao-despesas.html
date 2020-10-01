@@ -1,0 +1,15 @@
+<h1 mat-dialog-title>Confirmação de exclusão</h1>
+<div mat-dialog-content>
+  Prosseguir com a exclusão da despesa de valor {{data.valor}} ?
+</div>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Não</button>
+  <button
+    mat-button
+    [mat-dialog-close]="true"
+    (click)="ExcluirDespesa(data.despesaId)"
+  >
+    Sim
+  </button>
+</mat-dialog-actions>
